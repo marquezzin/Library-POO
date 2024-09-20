@@ -86,9 +86,70 @@ public class Main {
                     if (catalog.isEmpty()) {
                         System.out.println("O catálogo está vazio.");
                     } else {
-                        System.out.println("Catálogo de Livros:");
-                        for (Book book : catalog) {
-                            System.out.println(book);
+                        System.out.println("Deseja filtrar sua consulta? (S/N)");
+                        String choice = sc.nextLine();
+                        
+                        if (choice.equalsIgnoreCase("S")) {
+                            System.out.println("Escolha um dos filtros: (nome/autor/categoria/tipo/disponiveis)");
+                            String filterType = sc.nextLine();
+                            List<Book> filteredBooks = new ArrayList<>();
+                            
+                            for (Book book : catalog) {
+                                switch (filterType.toLowerCase()) {
+                                    case "nome":
+                                        System.out.print("Digite o nome do livro: ");
+                                        String nameValue = sc.nextLine();
+                                        if (book.getName().equalsIgnoreCase(nameValue)) {
+                                            filteredBooks.add(book);
+                                        }
+                                        break;
+                                    case "autor":
+                                        System.out.print("Digite o autor do livro: ");
+                                        String authorValue = sc.nextLine();
+                                        if (book.getAuthor().equalsIgnoreCase(authorValue)) {
+                                            filteredBooks.add(book);
+                                        }
+                                        break;
+                                    case "categoria":
+                                        System.out.print("Digite a categoria do livro: ");
+                                        String categoryValue = sc.nextLine();
+                                        if (book.getCategory().equalsIgnoreCase(categoryValue)) {
+                                            filteredBooks.add(book);
+                                        }
+                                        break;
+                                    case "tipo":
+                                        System.out.print("Digite o tipo do livro (impresso/digital): ");
+                                        String typeValue = sc.nextLine();
+                                        if (book.getType().equalsIgnoreCase(typeValue)) {
+                                            filteredBooks.add(book);
+                                        }
+                                        break;
+                                    case "disponiveis":
+                                        if (book.Available()) {
+                                            filteredBooks.add(book);
+                                        }
+                                        break;
+                                    default:
+                                        System.out.println("Filtro inválido.");
+                                        break;
+                                }
+                            }
+                            
+                            if (filteredBooks.isEmpty()) {
+                                System.out.println("Nenhum livro encontrado com o filtro fornecido.");
+                            } else {
+                                System.out.println("Livros filtrados:");
+                                for (Book book : filteredBooks) {
+                                    System.out.println(book);
+                                }
+                            }
+                        } else if (choice.equalsIgnoreCase("N")) {
+                            System.out.println("Catálogo de Livros:");
+                            for (Book book : catalog) {
+                                System.out.println(book);
+                            }
+                        } else {
+                            System.out.println("Opção Inválida");
                         }
                     }
                 }
